@@ -10,23 +10,6 @@ module.exports = {
         dark: "#000000",
         lightGray: "#7F85A2",
         blue: "#03004D",
-
-        secondary: "#e95757",
-        tertiary: "#082365",
-        
-        bgGray: "#F5F5F5",
-        darkGary: "#F0F0F0",
-        mainBg: "#f1f6fb",
-        
-        blueHeader: "#3C6EF5",
-        OrangeBuilder: "#ED754B",
-        FontGray: "#8a98a2",
-        darkBlack: "#263238",
-        greenShade: "#58AA43",
-        purpleShade: "#383DD3",
-        navyBlue: "#8055D9",
-        logoRed: "#DC4B35",
-        darkblue: "#050B43"
       },
     },
     screens: {

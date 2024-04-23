@@ -9,10 +9,13 @@ import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { MdRemoveRedEye } from "react-icons/md";
 import { IoMdEyeOff } from "react-icons/io";
 import CommonInput from '../../components/CommonInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { updateEmail, updatePassword } from '../../actions';
+import { connect } from 'react-redux';
 
-export default function Login() {
+const Login = ({ updateEmail, updatePassword }) => {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -37,7 +40,7 @@ export default function Login() {
                                 <h1 className="text-[#1E1F20] font-medium text-[22px] leading-[30px]">Welcome Back!</h1>
                                 <p className="text-lightGray font-medium text-sm leading-5 pt-2.5">Sign in to continue </p>
                                 <form className="lg:mt-[60px] mt-5">
-                                    <CommonInput label="Email" placeholder="davin.wong@mail.com" icon={IoCheckmarkCircleOutline} iconColor="#62CA76" />
+                                    <CommonInput label="Email" placeholder="davin.wong@mail.com" icon={IoCheckmarkCircleOutline} iconColor="#62CA76" onChange={(e) => updateEmail(e.target.value)} />
                                     <CommonInput
                                         label="password"
                                         type={showPassword ? "text" : "password"}
@@ -45,6 +48,7 @@ export default function Login() {
                                         icon={showPassword ? MdRemoveRedEye : IoMdEyeOff}
                                         togglePasswordVisibility={togglePasswordVisibility}
                                         iconColor="dark"
+                                        onChange={(e) => updatePassword(e.target.value)}
                                     />
                                     <div className="mb-[30px] mt-5 lg:flex hidden flex-wrap justify-end">
                                         <a href="#" className="text-sm font-sembbold text-lightGray">Forgot password?</a>
@@ -52,9 +56,9 @@ export default function Login() {
                                     <div className='lg:mb-10 mb-6'>
                                         <CommonButton className="bg-warning">Login</CommonButton>
                                         <div className="mb-3.5 mt-[18px] lg:hidden flex flex-wrap justify-center">
-                                            <a href="#" className="text-sm font-sembbold text-lightGray">Forgot password?</a>
+                                            <a href="#" className="text-sm font-bold text-lightGray">Forgot password?</a>
                                         </div>
-                                        <CommonButton className="border-2 border-[#E9E9EC] bg-white">Create an account</CommonButton>
+                                        <CommonButton onClick={() => navigate('/signUp')} className="border-2 border-[#E9E9EC] bg-white">Create an account</CommonButton>
                                     </div>
                                 </form>
                                 <div className='flex gap-3 justify-center items-center'>
@@ -63,7 +67,7 @@ export default function Login() {
                                         <div className='border border-[#ECECF2] text-[#8181A5] p-4 rounded-lg'><FaGoogle /></div>
                                         <div className='border border-[#ECECF2] text-[#8181A5] p-4 rounded-lg'><FaGithub /></div>
                                     </div>
-                                    <Link to="/signUp" className='text-[#8181A5] text-sm font-semibold cursor-pointer'>Or sign in with</Link>
+                                    <Link to="/signUp" className='text-[#8181A5] sm:text-sm text-xs font-semibold cursor-pointer'>Or sign in with</Link>
                                 </div>
                                 <div className='flex w-full justify-center pt-5 pb-2.5 lg:hidden'>
                                     <div className='bg-[#000000] rounded-md w-full max-w-36 h-[5px] flex justify-center'></div>
@@ -79,3 +83,16 @@ export default function Login() {
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    email: state.form.email,
+    password: state.form.password,
+});
+
+const mapDispatchToProps = {
+    updateEmail,
+    updatePassword,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
